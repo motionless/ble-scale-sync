@@ -3,6 +3,7 @@ import { QnScaleAdapter } from './qn-scale.js';
 import { RenphoScaleAdapter } from './renpho.js';
 import { RenphoEs26bbAdapter } from './renpho-es26bb.js';
 import { RenphoMsc04Adapter } from './renpho-msc04.js';
+import { RenphoMsc02Adapter } from './renpho-msc02.js';
 import { MiScale2Adapter } from './mi-scale-2.js';
 import { XiaomiS800Adapter } from './xiaomi-s800.js';
 import { BeurerBf720Adapter } from './beurer-bf720.js';
@@ -46,6 +47,10 @@ export const adapters: ScaleAdapter[] = [
   // so a named R-MSC04 lands here, while a nameless 0x1A10 device still goes to
   // ES-CS20M.
   new RenphoMsc04Adapter(),
+  // Renpho R-MSC02 / MorphoScan (#230): same 0x1A10 vendor service, but an
+  // 8-electrode scale that also emits a fragmented 0x25 impedance record.
+  // Name-matched only, for the same reason as the R-MSC04 above.
+  new RenphoMsc02Adapter(),
   new RenphoEs26bbAdapter(),
   // Beurer SIG scales (BF720/BF105) advertise/expose Body Composition 0x181B
   // and would otherwise be grabbed by the Mi Scale 2 adapter, so match them
