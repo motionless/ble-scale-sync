@@ -1,20 +1,20 @@
-name: BLE Scale Sync
+name: BLE Scale Sync (R-MSC02)
 # x-release-please-start-version
 version: 1.23.0
 # x-release-please-end
-slug: ble-scale-sync
+slug: ble_scale_sync_msc02
 description: >-
   Read BLE smart scales and export to Garmin Connect, MQTT (HA auto-discovery),
   InfluxDB, and more
-url: https://github.com/KristianP26/ble-scale-sync
+url: https://github.com/motionless/ble-scale-sync
 documentation: >-
   https://github.com/KristianP26/ble-scale-sync/blob/main/ble-scale-sync-addon/DOCS.md
 support: https://github.com/KristianP26/ble-scale-sync/issues
 panel_icon: mdi:scale-bathroom
+# LOCAL: aarch64 only, to match build.yaml. Declaring an arch with no build_from
+# entry lets the Supervisor start an install that then cannot resolve an image.
 arch:
-  - amd64
   - aarch64
-  - armv7
 startup: services
 boot: auto
 host_network: true
@@ -32,6 +32,12 @@ privileged:
 # be tested in CI. See issue #271.
 apparmor: false
 hassio_api: true
+# LOCAL: run.sh reads http://supervisor/services/mqtt to auto-detect the Mosquitto
+# broker, but the Supervisor only exposes that endpoint to an add-on that declares
+# it consumes the service. hassio_api alone is not enough, so auto-detection could
+# never succeed and always fell through to "using manual settings".
+services:
+  - mqtt:want
 map:
   - share:rw
 options:
