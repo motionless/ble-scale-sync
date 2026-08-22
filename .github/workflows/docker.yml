@@ -19,7 +19,11 @@ permissions:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
+    # LOCAL: native arm64 runner (free for public repos). With platforms trimmed to
+    # linux/arm64 there is nothing left for QEMU to emulate, and the runtime stage
+    # -- apt, pip building cryptography/curl_cffi from source, and npm ci running
+    # node-gyp for the native BLE modules -- runs natively instead.
+    runs-on: ubuntu-24.04-arm
 
     steps:
       - name: Checkout
@@ -59,7 +63,11 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          # LOCAL ONLY -- upstream builds amd64,arm64,arm/v7 here. Trimmed to the
+          # one arch this fork deploys to (RPi 4 / HA OS is aarch64), which drops
+          # both other emulated legs, including the armv7 one where cryptography
+          # and curl_cffi have no wheels and build from source.
+          platforms: linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

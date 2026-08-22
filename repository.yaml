@@ -1,3 +1,7 @@
-name: BLE Scale Sync
-url: https://github.com/KristianP26/ble-scale-sync
-maintainer: KristianP26
+# LOCAL: identifies this fork to Home Assistant. Upstream's copy names
+# KristianP26 and his URL, which makes an added fork display as the original
+# repository -- HA labels the store section from this file, not from the git
+# remote you typed in.
+name: BLE Scale Sync (motionless fork)
+url: https://github.com/motionless/ble-scale-sync
+maintainer: motionless

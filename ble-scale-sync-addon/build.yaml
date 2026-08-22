@@ -1,5 +1,13 @@
 # Pin to release version tag at release time (e.g. :1.8.0)
+#
+# LOCAL DEPLOYMENT ONLY -- do not include this file in an upstream PR.
+# Points the add-on at this fork's own GHCR image so the Supervisor runs the code
+# in this tree (the add-on folder ships no app code; it only layers run.sh onto
+# whatever build_from resolves to). Build the tag first with the "Docker"
+# workflow: Actions -> Docker -> Run workflow -> tag: msc02.
+#
+# aarch64 only, to match the trimmed platforms list in .github/workflows/docker.yml.
+# amd64/armv7 are omitted deliberately: no image is published for them, so leaving
+# them pointing at a non-existent tag would fail the pull with a confusing error.
 build_from:
-  amd64: ghcr.io/kristianp26/ble-scale-sync:latest
-  aarch64: ghcr.io/kristianp26/ble-scale-sync:latest
-  armv7: ghcr.io/kristianp26/ble-scale-sync:latest
+  aarch64: ghcr.io/motionless/ble-scale-sync:msc02
